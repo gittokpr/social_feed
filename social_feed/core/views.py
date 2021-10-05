@@ -27,7 +27,6 @@ def home(request):
     postidList = []
     for event in eventList:
         postidList.append(event['id'])
-    print(postidList)
     # calling facebook graph api with postidList to get post details which include attachments and created time
     posts = graph.get_objects(
         ids=postidList, fields='attachments,created_time')
@@ -58,7 +57,6 @@ def home(request):
     remoteFbPosts = FbPosts.objects.all()
     # saving all the retrived posts into cloud mongo db
     for remoteFbPost in remoteFbPosts:
-        print(remoteFbPost.userId)
         if not FbObject.objects.using('mongo').filter(userId=remoteFbPost.userId).exists():
             # create new record for each post
             postN = Post.objects.using('mongo').create(

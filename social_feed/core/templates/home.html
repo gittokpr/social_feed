@@ -1,41 +1,35 @@
 <!-- templates/home.html -->
 
 {% extends 'base.html' %}
-{% block title %} Home {% endblock %}
+{% block nav %}
+  {% for auth in backends.associated %}
+    {% if auth.provider == 'facebook' %}
+      <nav class="navbar fixed-top navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+          <img src="{{auth.extra_data.picture.data.url}}" width="30" height="30" class="d-inline-block align-top mr-2" alt="">
+          {{auth.extra_data.name}}
+        </a>
+        <button class="btn btn-outline-danger my-2 my-sm-0">
+          <a class="text-white" href="{% url 'logout' %}">Logout</a>
+        </button>
+      </nav>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
 {% block content %}
-<div class="row">
-    <div class="col-sm-12 mb-3">
-        <h4 class="text-center"> Welcome {{ user.username }} </h4>
-    </div>
-    {% for auth in backends.associated %}
-
-          {% if auth.provider == 'facebook' %}
-            <div class="col-md-6 text-center">
-                <img src="{{auth.extra_data.picture.data.url}}" alt="" width="150" height="150" style="border-radius: 50%">
-            </div>
-            <div class="col-md-6 social-container my-2">
-                <p>Signed in via: {{ auth.provider }}</p>
-                <p>Name: {{ auth.extra_data.name }}</p>
-                <p>Provider url: <a href="{{auth.extra_data.profile_url}}">link</a></p>
-            </div>
-          {% endif %}
-
-        {% endfor %}
-
-        <div class="col-sm-12 mt-2 text-center">
-          <button class="btn btn-danger">
-            <a href="{% url 'logout' %}">Logout</a>
-          </button>
+<div class="row mt-1">
+  {% for post in posts %}
+    {% if post.media %}
+    <div class="col-sm-12 justify-content-center">
+      <div class="card border-dark mx-auto mt-3" style="width: 38rem;">
+        <img src={{post.media.image.src}} class="card-img-top" alt="...">
+        <div class="card-body">
+          <p class="card-text">{{ post.description }}</p>
         </div>
-</div>
-{% for post in posts %}
-  {% if post.media %}
-    <div class="card" style="width: 18rem;">
-      <img src={{post.media.image.src}} class="card-img-top" alt="...">
-      <div class="card-body">
-        <p class="card-text">{{ post.description }}</p>
       </div>
     </div>
-  {% endif %}
-{% endfor %}
+    {% endif %}
+  {% endfor %}
+</div>
+
 {% endblock %}

@@ -12,9 +12,9 @@
     <title>Social Auth with Django</title>
 </head>
 <body>
-    <div class="container-fluid">
+    {% block nav %} {% endblock %}
+    <div class="container-fluid mt-5">
         <div>
-            <h1 class="mt-5 display-1 text-center">{% block title %}{% endblock %}</h1>
                 {% block content %}
                 {% endblock %}
         </div>

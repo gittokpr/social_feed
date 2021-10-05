@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'socialfeed',  # db name
         'ENFORCE_SCHEMA': False,
         'CLIENT': {  # mongo db connection string
-                'host': 'mongodb+srv://gitto:8606438396%40Gitto@cluster0.gk4e3.mongodb.net/socialfeed?retryWrites=true&w=majority'
+                'host': 'place connection string here'
         }
     }
 }
